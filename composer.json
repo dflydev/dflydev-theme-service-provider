@@ -1,0 +1,40 @@
+{
+    "name": "dflydev/theme-service-provider",
+    "description": "Theme Service Provider",
+    "keywords": ["theme"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dragonfly Development Inc.",
+            "email": "info@dflydev.com",
+            "homepage": "http://dflydev.com"
+        },
+        {
+            "name": "Beau Simensen",
+            "email": "beau@dflydev.com",
+            "homepage": "http://beausimensen.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "dflydev/theme": "1.*@dev",
+        "silex/silex": "1.*@dev"
+    },
+    "require-dev": {
+        "dflydev/theme-twig-extension": "1.*@dev"
+    },
+    "suggest": {
+        "dflydev/psr0-resource-locator-composer-service-provider": "1.*",
+        "dflydev/theme-twig-extension": "1.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Dflydev\\Silex\\Provider\\Theme": "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
