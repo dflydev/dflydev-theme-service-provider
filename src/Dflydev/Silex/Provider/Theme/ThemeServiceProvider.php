@@ -171,6 +171,19 @@ class ThemeServiceProvider implements ServiceProviderInterface
             return $type;
         });
 
+        if (class_exists('Dflydev\Twig\Extension\Theme\ThemeTwigExtension')) {
+            $this->configureThemeTwigExtension($app);
+        }
+    }
+
+    protected function configureThemeTwigExtension(Application $app)
+    {
+        $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
+            $twig->addExtension(new ThemeTwigExtension($app['theme.resource_url_generator']));
+
+            return $twig;
+        }));
+
         $app->get('/_theme_typed/{type}/{name}/resources/{resource}', function($type, $name, $resource) use ($app) {
             $theme = $app['theme.manager']->findThemeByName($name, $type);
             $filesystemPath = $theme->rootPath().'/public/'.$resource;
@@ -203,14 +216,6 @@ class ThemeServiceProvider implements ServiceProviderInterface
         ->assert('name', '.+')
         ->assert('resource', '.+')
         ->bind('_dflydev_theme_handler');
-
-        if (class_exists('Dflydev\Twig\Extension\Theme\ThemeTwigExtension', false)) {
-            $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
-                $twig->addExtension(new ThemeTwigExtension($app['theme.resource_url_generator']));
-
-                return $twig;
-            }));
-        }
     }
 
     protected function getDefaults()
